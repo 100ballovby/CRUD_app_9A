@@ -3,4 +3,32 @@
 {% block content %}
     <h1>Index</h1>
     <p>I'm providing the content block in base.html</p>
+    <div class="container">
+
+        {% if groceries|length < 1 %}
+            <p>There is nothing to show! Please, add an item!</p>
+        {% else %}
+            <table> <!-- table>thead>tr>th*3 -->
+                <thead>
+                <tr>
+                    <th>Groceries</th>
+                    <th>Added</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody> <!-- tbody>tr>td*3 -->
+
+                {% for grocery in groceries %}
+                    <tr>
+                        <td>{{ grocery.name }}</td>
+                        <td>{{ grocery.created.date() }}</td>
+                        <td><a href="">Delete</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% endif %}
+
+    </div>
 {% endblock %}
