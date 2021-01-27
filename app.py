@@ -1,12 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
+from config import db, Grocery  # importing database configuration
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    """Function represents index page"""
+    if request.method == 'POST':  # если форму заполнили и отправили
+        name = request.form['name']  # взять name из формы
+        new_stuff = Grocery(name=name)  # и записать продукт в БД
+
+        try:  # попробовать
+            db.session.add(new_stuff)  # добавить запись в БД
+            db.session.commit()  # применить изменения
+            return redirect('/')  # в случае успеха, вернуть пользователя на главную страницу
+        except:  # если что-то пошло не так
+            return 'There was a problem adding new item!'  # отобразить сообщение с ошибкой
+    else:
+        groceries = Grocery.query.order_by(Grocery.created).all()
+        return render_template('index.html', items=groceries)
 
 
 if __name__ == '__main__':
