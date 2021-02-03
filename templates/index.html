@@ -5,10 +5,10 @@
     <p>I'm providing the content block in base.html</p>
     <div class="container">
 
-        {% if groceries|length < 1 %}
+        {% if items|length < 1 %}
             <p>There is nothing to show! Please, add an item!</p>
         {% else %}
-            <table> <!-- table>thead>tr>th*3 -->
+            <table class="table"> <!-- table>thead>tr>th*3 -->
                 <thead>
                 <tr>
                     <th>Groceries</th>
@@ -18,11 +18,11 @@
                 </thead>
                 <tbody> <!-- tbody>tr>td*3 -->
 
-                {% for grocery in groceries %}
+                {% for grocery in items %}
                     <tr>
                         <td>{{ grocery.name }}</td>
                         <td>{{ grocery.created.date() }}</td>
-                        <td><a href="">Delete</a></td>
+                        <td><a href="/delete/{{ grocery.id }}" class="btn btn-danger btn-sm">Delete</a></td>
                     </tr>
                 {% endfor %}
 
