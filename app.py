@@ -1,8 +1,21 @@
 from flask import Flask, render_template, request, redirect
-from config import db, Grocery  # importing database configuration
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+
+
+class Grocery(db.Model):
+    """Класс описывает таблицу базы данных"""
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Grocery {self.name}>'
 
 
 @app.route('/', methods=['GET', 'POST'])
