@@ -49,7 +49,5 @@ def delete(id):
         return 'There was a problem deleting item.'
 
 
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8910)
