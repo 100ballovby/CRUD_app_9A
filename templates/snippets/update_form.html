@@ -1,0 +1,12 @@
+<div class="container">
+
+    <h1 class="my-4">Update data</h1>
+
+    <form action="/update/{{ grocery.id }}" method="POST">
+
+        <input type="text" name="name" id="newStuff" value="{{ grocery.name }}"> <!-- само поле для ввода -->
+        <button type="submit" class="btn btn-warning">Update</button>
+
+    </form>
+
+</div>
