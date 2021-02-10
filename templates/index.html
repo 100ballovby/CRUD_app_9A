@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Index</h1>
-    <p>I'm providing the content block in base.html</p>
     <div class="container">
+
+        <h1>Index</h1>
+        <p>I'm providing the content block in base.html</p>
+
 
         {% if items|length < 1 %}
             <p>There is nothing to show! Please, add an item!</p>
