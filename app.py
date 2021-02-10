@@ -49,5 +49,22 @@ def delete(id):
         return 'There was a problem deleting item.'
 
 
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    grocery = Grocery.query.get_or_404(id)
+
+    if request.method == 'POST':
+        grocery.name = request.form['name']
+        # заменяю имя продукта на новое имя из формы
+        
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was a problem updating data.'
+    else:
+        title = 'Update product'
+        return render_template('update.html', title=title, grocery=grocery)
+        
 if __name__ == '__main__':
     app.run(debug=True, port=8910)
