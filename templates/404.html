@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <div class="container">
+
+        <h1 class="text-center">Oops! Something went wrong here!
+            <span class="badge bg-danger"><a href="/">Main page</a></span></h1>
+
+        {% if message %}
+            <div class="alert alert-danger">
+            {{ message }}
+            </div>
+        {% endif %}
+
+        <img src="{{ url_for('static', filename='img/404.svg') }}" alt="">
+
+    </div>
+{% endblock %}

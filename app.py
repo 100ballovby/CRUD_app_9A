@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 class Grocery(db.Model):
     """Класс описывает таблицу базы данных"""
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
+    name = db.Column(db.String(80), nullable=False, unique=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
@@ -25,7 +25,10 @@ def index():
     """Function represents index page"""
     if request.method == 'POST':  # если форму заполнили и отправили
         name = request.form['name']  # взять name из формы
-        new_stuff = Grocery(name=name)  # и записать продукт в БД
+        if len(name) > 1:
+            new_stuff = Grocery(name=name)  # и записать продукт в БД
+        else:
+            return render_template('404.html', message='You can not adding an empty element!'), 404
 
         try:  # попробовать
             db.session.add(new_stuff)  # добавить запись в БД
@@ -65,6 +68,11 @@ def update(id):
     else:
         title = 'Update product'
         return render_template('update.html', title=title, grocery=grocery)
+
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html', title='Ошибка!'), 404
         
 if __name__ == '__main__':
     app.run(debug=True, port=8910)
